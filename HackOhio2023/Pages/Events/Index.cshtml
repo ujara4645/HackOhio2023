@@ -1,0 +1,102 @@
+﻿@page
+@model HackOhio2023.Pages.Events.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Event[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Event[0].AuthorId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Event[0].Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Event[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Event[0].DescriptionVideo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Event[0].DescriptionImage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Event[0].Location)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Event[0].Start)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Event[0].End)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Event[0].Recurring)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Event[0].RecurringFrequency)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Event[0].Audience)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Event) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AuthorId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DescriptionVideo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DescriptionImage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Start)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.End)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Recurring)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RecurringFrequency)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Audience)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
