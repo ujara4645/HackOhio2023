@@ -1,0 +1,141 @@
+﻿@page
+@using System.Security.Claims
+@model HackOhio2023.Pages.Events.IndexModel
+
+@{
+    ViewData["Title"] = "Events";
+}
+
+<h1>Events</h1>
+@if (Model.Categories != null)
+{
+    @if (Model.Categories.Contains("0"))
+    {
+        <h2>@(ViewData["Title"] = "Volunteer services")</h2>
+    }
+    else if (Model.Categories.Contains("1"))
+    {
+        <h2>@(ViewData["Title"] = "Volunteer goods")</h2>
+    }
+    else if (Model.Categories.Contains("2"))
+    {
+        <h2>@(ViewData["Title"] = "Casual/social")</h2>
+    }
+}
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+<form>
+    <div class="input-group mb-3">
+        <input type="text" asp-for="Search" class="form-control" aria-label="Search term" aria-describedby="button-search">
+        <button class="btn btn-outline-secondary" type="submit" id="button-search">Search</button>
+    </div>
+</form>
+
+<table class="table table-striped" style="table-layout: fixed;">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Event[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Event[0].Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Event[0].Description)
+            </th>
+            @*<th>
+            @Html.DisplayNameFor(model => model.Event[0].DescriptionVideo)
+            </th>
+            <th>
+            @Html.DisplayNameFor(model => model.Event[0].DescriptionImage)
+            </th>*@
+            @*<th>
+            @Html.DisplayNameFor(model => model.Event[0].Location)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Event[0].Start)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Event[0].End)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Event[0].Recurring)
+            </th>
+            @*<th>
+            @Html.DisplayNameFor(model => model.Event[0].RecurringFrequency)
+            </th>*@
+            @*<th>
+            @Html.DisplayNameFor(model => model.Event[0].Audience)
+            </th>*@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Event)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td class="text-truncate">
+                    <span>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </span>
+                </td>
+                @*<td>
+            @Html.DisplayFor(modelItem => item.DescriptionVideo)
+            </td>
+            <td>
+            @Html.DisplayFor(modelItem => item.DescriptionImage)
+            </td>*@
+                @*<td>
+            @Html.DisplayFor(modelItem => item.Location)
+            </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Start)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.End)
+                </td>
+                <td>
+                    @if (item.Recurring)
+                    {
+                        @*<i class="bi bi-check"></i>*@
+                        <span>Yes</span>
+                    }
+                    else
+                    {
+                        @*<i class="bi bi-x"></i>*@
+                        <span>No</span>
+                    }
+                </td>
+                @*<td>
+            @Html.DisplayFor(modelItem => item.RecurringFrequency)
+            </td>*@
+                @*<td>
+            @Html.DisplayFor(modelItem => item.Audience)
+            </td>*@
+                @if (item.AuthorId == User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
+                {
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <a asp-page="./Details" asp-route-id="@item.Id">Details</a>
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

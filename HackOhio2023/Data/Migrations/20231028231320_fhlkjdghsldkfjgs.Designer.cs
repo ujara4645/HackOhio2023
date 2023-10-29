@@ -4,6 +4,7 @@ using HackOhio2023.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HackOhio2023.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231028231320_fhlkjdghsldkfjgs")]
+    partial class fhlkjdghsldkfjgs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +23,21 @@ namespace HackOhio2023.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("ApplicationUserEvent", b =>
+                {
+                    b.Property<int>("EventsId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ParticipantsId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("EventsId", "ParticipantsId");
+
+                    b.HasIndex("ParticipantsId");
+
+                    b.ToTable("ApplicationUserEvent");
+                });
 
             modelBuilder.Entity("HackOhio2023.Models.ApplicationUser", b =>
                 {
@@ -85,21 +102,6 @@ namespace HackOhio2023.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-                });
-
-            modelBuilder.Entity("HackOhio2023.Models.ApplicationUserEvent", b =>
-                {
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("EventId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ApplicationUserId", "EventId");
-
-                    b.HasIndex("EventId");
-
-                    b.ToTable("ApplicationUserEvents");
                 });
 
             modelBuilder.Entity("HackOhio2023.Models.Event", b =>
@@ -289,23 +291,19 @@ namespace HackOhio2023.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("HackOhio2023.Models.ApplicationUserEvent", b =>
+            modelBuilder.Entity("ApplicationUserEvent", b =>
                 {
-                    b.HasOne("HackOhio2023.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("ApplicationUserEvents")
-                        .HasForeignKey("ApplicationUserId")
+                    b.HasOne("HackOhio2023.Models.Event", null)
+                        .WithMany()
+                        .HasForeignKey("EventsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HackOhio2023.Models.Event", "Event")
-                        .WithMany("ApplicationUserEvents")
-                        .HasForeignKey("EventId")
+                    b.HasOne("HackOhio2023.Models.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("ParticipantsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("ApplicationUser");
-
-                    b.Navigation("Event");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -357,16 +355,6 @@ namespace HackOhio2023.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("HackOhio2023.Models.ApplicationUser", b =>
-                {
-                    b.Navigation("ApplicationUserEvents");
-                });
-
-            modelBuilder.Entity("HackOhio2023.Models.Event", b =>
-                {
-                    b.Navigation("ApplicationUserEvents");
                 });
 #pragma warning restore 612, 618
         }

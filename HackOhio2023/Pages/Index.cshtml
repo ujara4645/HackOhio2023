@@ -1,10 +1,70 @@
 ﻿@page
 @model IndexModel
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Home";
 }
+<html>
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">ShareCare</h1>
 </div>
+<div id="map" class="mx-auto" style="width:600px; height: 400px;"></div>
+
+@*<script src="https://maps.googleapis.com/maps/api/js?key=@Configuration["MapsAPIKey"]"></script>*@
+<script>
+    (g => { var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__", m = document, b = window; b = b[c] || (b[c] = {}); var d = b.maps || (b.maps = {}), r = new Set, e = new URLSearchParams, u = () => h || (h = new Promise(async (f, n) => { await (a = m.createElement("script")); e.set("libraries", [...r] + ""); for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]); e.set("callback", c + ".maps." + q); a.src = `https://maps.${c}apis.com/maps/api/js?` + e; d[q] = f; a.onerror = () => h = n(Error(p + " could not load.")); a.nonce = m.querySelector("script[nonce]")?.nonce || ""; m.head.append(a) })); d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)) })
+        ({ key: "@Configuration["MapsAPIKey"]", v: "weekly" });
+</script>
+<script>
+    const biGeoAlt = '\uf3e8';
+    const biCarFrontFill = '\uf7e0';
+    const biTrash3 = '\uf78b';
+    const biBox2Heart = '\uf70c';
+    const biBasket3 = '\uf184';
+    const locations = [
+        [1, 'Sunday Trash Cleanup', 39.9892186, -83.0109815, biTrash3],
+        [2, 'Food Fair', 39.9932003, -83.0112985, biBox2Heart],
+        [3, "Mikes Daily Commute", 39.995896, -83.003118, biCarFrontFill],
+        [4, 'Dog Hour', 39.9928131, -83.0091728, biGeoAlt],
+        [5, 'Fun with Frisbee', 39.9955151, -83.0103182, biGeoAlt],
+        [6, 'Fall Picnic', 39.9866135, -83.0114802, biBasket3],
+        [7, 'Bible Study', 39.9944645, -83.0097964, biGeoAlt]
+    ];
+    let map;
+
+    async function initMap() {
+        const { Map } = await google.maps.importLibrary("maps");
+        map = new Map(document.getElementById('map'), {
+            //center: { lat: 39.9612, lng: -82.9988 },
+            center: { lat: 39.9913844, lng: -83.006763
+        },
+            zoom: 15
+        });
+        await setMarkers(map);
+    }
+
+    async function setMarkers(map) {
+        const { Marker } = await google.maps.importLibrary("marker");
+        for (const location of locations) {
+            const [id, title, lat, lng, text] = location;
+            const url = `/Events/Details?id=${id}`;
+            const marker = new Marker({
+                position: { lat, lng },
+                map,
+                label: {
+                    text,
+                    fontFamily: 'bootstrap-icons',
+                    color: '#ffffff',
+                    fontSize: '18px'
+                },
+                title
+            });
+            marker.addListener('click', () => window.open(url));
+        }
+    }
+
+    initMap();
+</script>
+</html>

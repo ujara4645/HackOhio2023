@@ -4,6 +4,7 @@ using HackOhio2023.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HackOhio2023.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231029000904_jkldhfgs")]
+    partial class jkldhfgs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -89,13 +91,16 @@ namespace HackOhio2023.Data.Migrations
 
             modelBuilder.Entity("HackOhio2023.Models.ApplicationUserEvent", b =>
                 {
-                    b.Property<string>("ApplicationUserId")
+                    b.Property<string>("ApplicationUserId1")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("EventId")
                         .HasColumnType("int");
 
-                    b.HasKey("ApplicationUserId", "EventId");
+                    b.Property<int>("ApplicationUserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ApplicationUserId1", "EventId");
 
                     b.HasIndex("EventId");
 
@@ -293,7 +298,7 @@ namespace HackOhio2023.Data.Migrations
                 {
                     b.HasOne("HackOhio2023.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("ApplicationUserEvents")
-                        .HasForeignKey("ApplicationUserId")
+                        .HasForeignKey("ApplicationUserId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
