@@ -1,4 +1,5 @@
 ﻿@page
+@using HackOhio2023.Models
 @model HackOhio2023.Pages.Events.CreateModel
 
 @{
@@ -9,72 +10,61 @@
 
 <h4>Event</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="row g-5">
+    <div class="col-md-7 col-lg-8">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Event.Name" class="control-label"></label>
-                <input asp-for="Event.Name" class="form-control" />
-                <span asp-validation-for="Event.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Event.AuthorId" class="control-label"></label>
-                <input asp-for="Event.AuthorId" class="form-control" />
-                <span asp-validation-for="Event.AuthorId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Event.Category" class="control-label"></label>
-                <input asp-for="Event.Category" class="form-control" />
-                <span asp-validation-for="Event.Category" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Event.Description" class="control-label"></label>
-                <input asp-for="Event.Description" class="form-control" />
-                <span asp-validation-for="Event.Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Event.DescriptionVideo" class="control-label"></label>
-                <input asp-for="Event.DescriptionVideo" class="form-control" />
-                <span asp-validation-for="Event.DescriptionVideo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Event.DescriptionImage" class="control-label"></label>
-                <input asp-for="Event.DescriptionImage" class="form-control" />
-                <span asp-validation-for="Event.DescriptionImage" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Event.Location" class="control-label"></label>
-                <input asp-for="Event.Location" class="form-control" />
-                <span asp-validation-for="Event.Location" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Event.Start" class="control-label"></label>
-                <input asp-for="Event.Start" class="form-control" />
-                <span asp-validation-for="Event.Start" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Event.End" class="control-label"></label>
-                <input asp-for="Event.End" class="form-control" />
-                <span asp-validation-for="Event.End" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Event.Recurring" /> @Html.DisplayNameFor(model => model.Event.Recurring)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="Event.RecurringFrequency" class="control-label"></label>
-                <input asp-for="Event.RecurringFrequency" class="form-control" />
-                <span asp-validation-for="Event.RecurringFrequency" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Event.Audience" class="control-label"></label>
-                <input asp-for="Event.Audience" class="form-control" />
-                <span asp-validation-for="Event.Audience" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="row g-3">
+                <div class="form-floating col-sm-6">
+                    <input asp-for="Event.Name" class="form-control" placeholder="" />
+                    <label asp-for="Event.Name"></label>
+                    <span asp-validation-for="Event.Name" class="text-danger"></span>
+                </div>
+                <div class="form-floating col-sm-6">
+                    <select asp-for="Event.Category" class="form-select" asp-items="Html.GetEnumSelectList<Category>()"></select>
+                    <label asp-for="Event.Category"></label>
+                    <span asp-validation-for="Event.Category" class="text-danger"></span>
+                </div>
+                <div class="form-floating col-12">
+                    <textarea asp-for="Event.Description" class="form-control" placeholder=""></textarea>
+                    <label asp-for="Event.Description"></label>
+                    <span asp-validation-for="Event.Description" class="text-danger"></span>
+                </div>
+                <div class="form-floating col-12">
+                    <input asp-for="Event.Location" class="form-control" placeholder="" />
+                    <label asp-for="Event.Location"></label>
+                    <span asp-validation-for="Event.Location" class="text-danger"></span>
+                </div>
+                <div class="form-floating col-12">
+                    <input asp-for="Event.Audience" class="form-control" placeholder="" />
+                    <label asp-for="Event.Audience"></label>
+                    <span asp-validation-for="Event.Audience" class="text-danger"></span>
+                </div>
+                <div class="form-floating col-6">
+                    <input asp-for="Event.Start" class="form-control" placeholder="" />
+                    <label asp-for="Event.Start"></label>
+                    <span asp-validation-for="Event.Start" class="text-danger"></span>
+                </div>
+                <div class="form-floating col-6">
+                    <input asp-for="Event.End" class="form-control" placeholder="" />
+                    <label asp-for="Event.End"></label>
+                    <span asp-validation-for="Event.End" class="text-danger"></span>
+                </div>
+                <div class="col-6">
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Event.Recurring" /> @Html.DisplayNameFor(model => model.Event.Recurring)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-floating col-6" id="recurringFrequencyContainer" hidden>
+                    <input asp-for="Event.RecurringFrequency" class="form-control" placeholder="" />
+                    <label asp-for="Event.RecurringFrequency"></label>
+                    <span asp-validation-for="Event.RecurringFrequency" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
             </div>
         </form>
     </div>
@@ -85,5 +75,14 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        (() => {
+            document.getElementById('@Html.IdFor(model => model.Event.Recurring)').addEventListener('change', event => {
+                document.getElementById('recurringFrequencyContainer').hidden = !event.currentTarget.checked;
+            });
+        })();
+    </script>
 }
