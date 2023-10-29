@@ -48,8 +48,12 @@
             map: map,
             icon: {
                     anchor: new google.maps.Point(16, 16),
-                    url: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg)
+                    url: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(picnic_svg)
                 },
+            url: '/Identity/Account/Login'
+        });
+        google.maps.event.addListener(marker, 'click', function() {
+            window.open(marker.url);
         });
     </script>
 </html>  
